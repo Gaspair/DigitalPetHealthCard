@@ -28,6 +28,10 @@ public class Pet {
     @JoinColumn(name="owner_id")
     private Owner owner;
 
+    @ManyToOne
+    @JoinColumn(name="vet_id")
+    private Vet vet;
+
     @Column(name = "pet_name")
     private String petName;
 

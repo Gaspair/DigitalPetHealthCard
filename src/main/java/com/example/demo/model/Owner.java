@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user", schema = "usr")
+@Table(name = "owner", schema = "own")
 @Getter
 @Setter
 @RequiredArgsConstructor
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Owner {
 
