@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Owner;
 import com.example.demo.service.OwnerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,13 @@ public class OwnerController {
 
     private OwnerService ownerService;
 
+
+    @Autowired
+    public OwnerController(OwnerService ownerService) {
+        this.ownerService = ownerService;
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneByUUID(@PathVariable("id") UUID ownerID) {
         return ownerService.getOwnerByID(ownerID);
@@ -26,6 +34,9 @@ public class OwnerController {
     }
 
 
-
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID ownerID) {
+        return ownerService.deleteUser(ownerID);
+    }
 
 }

@@ -33,12 +33,19 @@ public class OwnerDAO implements OwnerStore {
 
     @Override
     public ResponseEntity<?> getPetList(UUID ownerID) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(petRepository.findAllByOwner(ownerRepository.findById(ownerID)));
     }
 
     @Override
     public ResponseEntity<?> save(Owner owner) {
         return ResponseEntity.status(HttpStatus.OK).body(ownerRepository.save(owner));
+
+    }
+
+    @Override
+    public ResponseEntity<?> delete(UUID ownerID) {
+        ownerRepository.deleteById(ownerID);
+        return ResponseEntity.status(HttpStatus.OK).body("Account deleted");
 
     }
 }
