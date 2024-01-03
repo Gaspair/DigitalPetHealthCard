@@ -13,4 +13,6 @@ public interface OwnerStore {
     ResponseEntity<?> getPetList(UUID ownerID);
 
     ResponseEntity<?> save(Owner owner);
+
+    ResponseEntity<?> delete(UUID ownerID);
 }
