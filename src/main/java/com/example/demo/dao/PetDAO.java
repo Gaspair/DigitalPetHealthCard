@@ -4,12 +4,16 @@ import com.example.demo.model.Pet;
 import com.example.demo.repository.OwnerRepository;
 import com.example.demo.repository.PetRepository;
 import com.example.demo.service.PetStore;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
+@Transactional
 public class PetDAO implements PetStore {
 
     private OwnerRepository ownerRepository;
@@ -21,7 +25,7 @@ public class PetDAO implements PetStore {
     }
 
     @Override
-    public ResponseEntity<?> getPetByID(UUID petID) {
+    public ResponseEntity<?> getOneByID(UUID petID) {
         return ResponseEntity.status(HttpStatus.OK).body(petRepository.findById(petID));
     }
 
@@ -33,11 +37,20 @@ public class PetDAO implements PetStore {
 
     @Override
     public ResponseEntity<?> save(Pet pet) {
-        return null;
+        petRepository.save(pet);
+        return ResponseEntity.status(HttpStatus.OK).body("Pet Saved");
+
     }
 
     @Override
     public ResponseEntity<?> delete(UUID petID) {
-        return null;
+        Optional<Pet> pet = petRepository.findById(petID);
+
+        if (pet.isPresent()) {
+            petRepository.delete(pet.get());
+            return ResponseEntity.status(HttpStatus.OK).body("Pet deleted");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet not found");
+
     }
 }
