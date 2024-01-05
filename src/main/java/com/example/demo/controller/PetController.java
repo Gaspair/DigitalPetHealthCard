@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Pet;
 import com.example.demo.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -14,7 +12,7 @@ import java.util.UUID;
 @RequestMapping("api/v1/pet")
 public class PetController {
 
-    private PetService petService;
+    private final PetService petService;
 
     @Autowired
     public PetController(PetService petService) {
@@ -24,6 +22,16 @@ public class PetController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneByUUID(@PathVariable("id") UUID petID){
         return petService.getPetByID(petID);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<?> savePet(@RequestBody Pet pet){
+        return petService.savePet(pet);
+    }
+
+    @DeleteMapping("/deletePet/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID petID) {
+        return petService.deletePet(petID);
     }
 
 }

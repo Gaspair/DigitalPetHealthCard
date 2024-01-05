@@ -5,9 +5,11 @@ import com.example.demo.model.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.UUID;
 
 public interface PetRepository extends JpaRepository<Pet, UUID> {
-    List<Pet> findAllByOwner(Optional<Owner> owner);
+    List<Pet> findAllByOwner(Owner owner);
+
+    Owner findByPetID(UUID petID);
 }

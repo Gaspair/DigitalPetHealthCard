@@ -27,7 +27,9 @@ public class OwnerService {
 
     }
 
-    public ResponseEntity<?> deleteUser(UUID ownerID) {
+    public ResponseEntity<?> deleteOwner(UUID ownerID) {
         return ownerStore.delete(ownerID);
     }
+
+
 }

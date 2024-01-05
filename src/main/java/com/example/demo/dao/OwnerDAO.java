@@ -3,7 +3,6 @@ package com.example.demo.dao;
 
 import com.example.demo.model.Owner;
 import com.example.demo.repository.OwnerRepository;
-import com.example.demo.repository.PetRepository;
 import com.example.demo.service.OwnerStore;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,11 @@ import java.util.UUID;
 @Transactional
 public class OwnerDAO implements OwnerStore {
 
-    private OwnerRepository ownerRepository;
-    private PetRepository petRepository;
+    private final OwnerRepository ownerRepository;
 
     @Autowired
-    public OwnerDAO(OwnerRepository ownerRepository, PetRepository petRepository) {
+    public OwnerDAO(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
-        this.petRepository = petRepository;
     }
 
     @Override
@@ -33,7 +30,7 @@ public class OwnerDAO implements OwnerStore {
 
     @Override
     public ResponseEntity<?> getPetList(UUID ownerID) {
-        return ResponseEntity.status(HttpStatus.OK).body(petRepository.findAllByOwner(ownerRepository.findById(ownerID)));
+        return ResponseEntity.status(HttpStatus.OK).body(ownerRepository.findByOwnerID(ownerID));
     }
 
     @Override
