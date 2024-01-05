@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Pet;
-import com.example.demo.repository.OwnerRepository;
 import com.example.demo.repository.PetRepository;
 import com.example.demo.service.PetStore;
 import jakarta.transaction.Transactional;
@@ -16,11 +15,9 @@ import java.util.UUID;
 @Transactional
 public class PetDAO implements PetStore {
 
-    private OwnerRepository ownerRepository;
-    private PetRepository petRepository;
+    private final PetRepository petRepository;
 
-    public PetDAO(OwnerRepository ownerRepository, PetRepository petRepository) {
-        this.ownerRepository = ownerRepository;
+    public PetDAO( PetRepository petRepository) {
         this.petRepository = petRepository;
     }
 
@@ -31,8 +28,9 @@ public class PetDAO implements PetStore {
 
     @Override
     public ResponseEntity<?> getOwnerList(UUID petID) {
-        Optional<Pet> pet = petRepository.findById(petID);
-        return ResponseEntity.status(HttpStatus.OK).body(ownerRepository.findById(pet.get().getOwner().getOwnerID()));
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(petRepository.findByPetID(petID));
     }
 
     @Override

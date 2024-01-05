@@ -13,15 +13,12 @@ import java.util.UUID;
 @RequestMapping("api/v1/owner")
 public class OwnerController {
 
-
-    private OwnerService ownerService;
-
+    private final OwnerService ownerService;
 
     @Autowired
     public OwnerController(OwnerService ownerService) {
         this.ownerService = ownerService;
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneByUUID(@PathVariable("id") UUID ownerID) {
@@ -33,10 +30,9 @@ public class OwnerController {
         return ownerService.saveOwner(owner);
     }
 
-
-    @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID ownerID) {
-        return ownerService.deleteUser(ownerID);
+    @DeleteMapping("/deleteOwner/{id}")
+    public ResponseEntity<?> deleteOwner(@PathVariable("id") UUID ownerID) {
+        return ownerService.deleteOwner(ownerID);
     }
 
 }
